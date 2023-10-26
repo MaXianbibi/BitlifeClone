@@ -6,8 +6,8 @@ import { Header } from './Header/Header';
 import { Body } from './Body/Body';
 import { Footer } from './Footer/Footer';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
+import { WorkComponents } from '../WorkComponents/WorkComponents';
+import { BankComponents } from '../BankComponents/BankComponents';
 
 export const GameComponents = () => {
     const { lightMode } = useContext(LightModeContext);
@@ -25,11 +25,12 @@ export const GameComponents = () => {
             <ProfileProvider>
                 <Header />
 
-                
+
 
                 <Routes>
-                    <Route path="/" element={<><Body/><Footer /></>}/>
-                    <Route path="/game" element={<>Hey mf</>}/>
+                    <Route path="/" element={<><Body /><Footer /></>} />
+                    <Route path="/work" element={<WorkComponents />} />
+                    <Route path="/bank" element={<BankComponents />} />
                 </Routes>
 
 

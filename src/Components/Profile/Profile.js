@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import {faker} from '@faker-js/faker';
+import { faker, ne } from '@faker-js/faker';
 import { createAvatar } from '@dicebear/core';
 import { micah } from '@dicebear/collection';
 
@@ -12,17 +12,22 @@ const generateProfile = () => {
     const email = faker.internet.email({ firstName, lastName });
     const musicGenre = faker.music.genre();
     const moneyBalance = 0;
-    const job = "unemployed"
+    const country = faker.location.country();
+    const job = {
+        jobTitle: "Unemployed",
+        salary: 0
+    }
     const propAvatar = {
         seed: firstName + lastName,
         radius: 50
     };
-    const age = 1;
-
+    const age = 0;
     const timeLine = [
-       {age: 0,
-        event: "Born",
-        id: new Date().getTime()},
+        {
+            age: 0,
+            event: ["Born",],
+            id: new Date().getTime()
+        },
     ];
 
     return {
@@ -35,7 +40,8 @@ const generateProfile = () => {
         moneyBalance,
         timeLine,
         age,
-        job
+        job,
+        country
     };
 }
 
@@ -55,7 +61,7 @@ export const ProfileProvider = ({ children }) => {
         avatarString: initialAvatar
     });
 
-    const changeProfile = useCallback (() => {
+    const changeProfile = useCallback(() => {
         const newProfile = generateProfile();
         const newAvatar = generateAvatar(newProfile.propAvatar);
         setProfile({
@@ -79,11 +85,27 @@ export const ProfileProvider = ({ children }) => {
         });
     }, []);
 
+    const addEvents = (texte) => {
+        setProfile(prev => {
+            const newTimeLine = [...prev.timeLine];
+            const lastEvent = { ...newTimeLine[newTimeLine.length - 1] };
+            lastEvent.event = [...lastEvent.event, texte];
+            newTimeLine[newTimeLine.length - 1] = lastEvent;
+            return {
+                ...prev,
+                timeLine: newTimeLine
+            };
+        });
+    };
+    
+
+
     const contextValue = {
         profile,
         changeProfile,
         addProps,
-        setProfile
+        setProfile,
+        addEvents
     };
 
     return (

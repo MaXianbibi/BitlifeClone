@@ -10,68 +10,92 @@ import { Link } from 'react-router-dom';
 import { ProfileContext } from '../../Profile/Profile';
 import { LightModeContext } from '../../LightMode/LightModeProvider';
 
+function newlineText(text) {
+	const newText = text.split('\n').map((str, index, array) =>
+		index === array.length - 1 ? str : <>
+			{str}
+			<br />
+		</>
+	);
+	return <>{newText}</>;
+}
+
+
 function TimeLine({ timeLine }) {
 
-  return (
-    timeLine.map((item) =>
-      <div className='BodyContainerText' key={item.id}>
-        <p>Age: {item.age} years old</p>
-        <span>{item.event}</span>
-      </div>
-    )
-  );
+	return (
+		timeLine.map((item) =>
+			<div className='BodyContainerText' key={item.id}>
+				<p>Age: {item.age} years old</p>
+				{item.event.map((event) => <span key={Math.random()}>{event}</span>)}
+			</div>
+		)
+	);
 }
 
 export const Body = () => {
-  const { profile, setProfile } = React.useContext(ProfileContext);
-  const { lightMode } = React.useContext(LightModeContext);
-  const containerRef = React.useRef(null);  // Ajoutez ceci
+	const { profile, setProfile, addEvents } = React.useContext(ProfileContext);
+	const { lightMode } = React.useContext(LightModeContext);
+	const containerRef = React.useRef(null);  // Ajoutez ceci
 
-  const lightModeClass = {
-    color: lightMode ? "black" : "white",
-    borderColor: lightMode ? "black" : "#435C84",
-  };
+	const lightModeClass = {
+		color: lightMode ? "black" : "white",
+		borderColor: lightMode ? "black" : "#435C84",
+	};
 
-  const ageButton = () => {
-    setProfile(prev => ({
-      ...prev,
-      age: prev.age + 1,
-      timeLine: [...prev.timeLine, { age: prev.age, event: "Ishhhh", id: prev.timeLine.length }]
-    }));
-  };
+	const ageButton = () => {
+		setProfile(prev => {
+			const newAge = prev.age + 1;
+			const newTimeLineItem = {
+				age: newAge,
+				event: ["A new Year has passed"],
+				id: Math.random(),
+			};
 
-  React.useEffect(() => {  // Ajoutez ceci
-    const containerElement = containerRef.current;
-    if (containerElement) {
-      containerElement.scrollTop = containerElement.scrollHeight;
-    }
-  }, [profile.timeLine]);
+			console.log(profile)
+			return {
+				...prev,
+				moneyBalance: prev.moneyBalance + prev.job.salary,
+				age: newAge,
+				timeLine: [...prev.timeLine, newTimeLineItem]
+			};
+		});
+	};
 
-  return (
-    <>
-      <div className='BodyContainer' style={lightModeClass} ref={containerRef}>
-        <TimeLine timeLine={profile.timeLine} />
-      </div>
-      <div className='BodyButton'>
-        <button onClick={ageButton}>
-          <Link to="/game">
-            <img src={suiteCase} alt='Suitcase' height="50px" width="auto" />
-          </Link>
-        </button>
-        <button onClick={ageButton}>
-          <img src={balance} alt='Balance' height="50px" width="auto" />
-        </button>
-        <button onClick={ageButton}>
-          <img src={buttonSvg} alt='PlusButtonSvg' height="70px" width="auto" id='PlusButton' />
-        </button>
-        <button onClick={ageButton}>
-          <img src={heart} alt='Heart' height="50px" width="auto" />
-        </button>
-        <button onClick={ageButton}>
-          <img src={other} alt='Other' height="50px" width="auto" />
-        </button>
-      </div>
-    </>
-  );
+	React.useEffect(() => {  // Ajoutez ceci
+		const containerElement = containerRef.current;
+		if (containerElement) {
+			containerElement.scrollTop = containerElement.scrollHeight;
+		}
+	}, [profile.timeLine]);
+
+	return (
+		<>
+			<div className='BodyContainer' style={lightModeClass} ref={containerRef}>
+				<TimeLine timeLine={profile.timeLine} />
+			</div>
+			<div className='BodyButton'>
+				<button>
+					<Link to="/work">
+						<img src={suiteCase} alt='Suitcase' height="50px" width="auto" />
+					</Link>
+				</button>
+				<button>
+					<Link to="/bank">
+						<img src={balance} alt='Balance' height="50px" width="auto" />
+					</Link>
+				</button>
+				<button onClick={ageButton}>
+					<img src={buttonSvg} alt='PlusButtonSvg' height="70px" width="auto" id='PlusButton' />
+				</button>
+				<button onClick={() => { addEvents("222")}}>
+					<img src={heart} alt='Heart' height="50px" width="auto" />
+				</button>
+				<button onClick={() => { addEvents("sd")}}>
+					<img src={other} alt='Other' height="50px" width="auto" />
+				</button>
+			</div>
+		</>
+	);
 }
 
