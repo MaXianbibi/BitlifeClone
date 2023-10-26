@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { LightModeContext } from './Components/LightMode/LightModeProvider';
+import { GameComponents } from './Components/GameComponents/GameComponents';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const { lightMode, setLightMode } = useContext(LightModeContext);
+
+	const lightModeClass = {
+		backgroundColor: lightMode ? "white" : "#253659	",
+		color: lightMode ? "black" : "white",
+
+	}
+
+
+	return (
+		<div className="App" style={lightModeClass}>
+			<button style={lightModeClass} onClick={() => setLightMode(prev => !prev)}> Light mode</button>
+			<GameComponents />
+		</div>
+	);
 }
 
 export default App;
