@@ -10,17 +10,6 @@ import { Link } from 'react-router-dom';
 import { ProfileContext } from '../../Profile/Profile';
 import { LightModeContext } from '../../LightMode/LightModeProvider';
 
-function newlineText(text) {
-	const newText = text.split('\n').map((str, index, array) =>
-		index === array.length - 1 ? str : <>
-			{str}
-			<br />
-		</>
-	);
-	return <>{newText}</>;
-}
-
-
 function TimeLine({ timeLine }) {
 
 	return (
@@ -52,7 +41,7 @@ export const Body = () => {
 				id: Math.random(),
 			};
 
-			console.log(profile)
+			
 			return {
 				...prev,
 				moneyBalance: prev.moneyBalance + prev.job.salary,

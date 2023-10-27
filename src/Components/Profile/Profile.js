@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { faker, ne } from '@faker-js/faker';
+import { faker   } from '@faker-js/faker';
 import { createAvatar } from '@dicebear/core';
 import { micah } from '@dicebear/collection';
 
@@ -13,6 +13,14 @@ const generateProfile = () => {
     const musicGenre = faker.music.genre();
     const moneyBalance = 0;
     const country = faker.location.country();
+    const assets = [
+        {
+            invest: 0,
+            fn: undefined,
+            id: new Date().getTime(),
+        },
+
+    ]
     const job = {
         jobTitle: "Unemployed",
         salary: 0
@@ -41,7 +49,8 @@ const generateProfile = () => {
         timeLine,
         age,
         job,
-        country
+        country,
+        assets
     };
 }
 
@@ -97,7 +106,6 @@ export const ProfileProvider = ({ children }) => {
             };
         });
     };
-    
 
 
     const contextValue = {

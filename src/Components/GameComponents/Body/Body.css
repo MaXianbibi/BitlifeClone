@@ -14,7 +14,7 @@ element::-webkit-scrollbar {
 .BodyContainer {
     display: flex;
     flex-direction: column;
-    height: 55%;
+    height: 74%;
     width: 100%;
     border-bottom: 5px solid;
     box-sizing: border-box;
@@ -67,6 +67,8 @@ element::-webkit-scrollbar {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .BodyButton button {

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { LightModeContext } from './Components/LightMode/LightModeProvider';
 import { GameComponents } from './Components/GameComponents/GameComponents';
 

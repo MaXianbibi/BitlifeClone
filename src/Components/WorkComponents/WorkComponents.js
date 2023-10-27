@@ -1,19 +1,24 @@
 import React, { useContext } from 'react'
 import "./WorkComponents.css"
-import backIcon from './Assets/B.svg'
 import { Link } from 'react-router-dom'
 import { faker } from '@faker-js/faker';
 import { ProfileContext } from '../Profile/Profile';
 import { MenuHeader } from '../GameComponents/Body/MenuHeader/MenuHeader';
 
 
-function updateProfileWithJob(jobI, addEvents, setProfile) {
+function updateProfileWithJob(jobI, addEvents, setProfile, age) {
+
+	
+	if (age < 18) {
+		addEvents('You are too young to work');
+		return ;
+	}
 	setProfile(prevProfile => ({
 		...prevProfile,
 		job: jobI
 	}));
-	
-	addEvents(jobI.jobTitle)
+	addEvents("You got a job as " + jobI.jobTitle)
+	addEvents("You earn " + jobI.salary + " $ per year")
 }
 
 const biasedRandomBetween = (min, max) => {
@@ -27,7 +32,7 @@ const biasedRandomBetween = (min, max) => {
 
 function JobGenerators() {
 	const jobList = []
-	const { addEvents, setProfile } = useContext(ProfileContext)
+	const { addEvents, setProfile, profile } = useContext(ProfileContext)
 
 	for (let i = 0; i < 100; i++) {
 		const job = {
@@ -40,7 +45,7 @@ function JobGenerators() {
 	return (jobList.map((jobI, index) => {
 
 		return (
-			<button onClick={() => updateProfileWithJob(jobI, addEvents, setProfile)} key={index}>
+			<button onClick={() => updateProfileWithJob(jobI, addEvents, setProfile, profile.age)} key={index}>
 				<Link to='/'>
 					<div className='WorkContainerSelect'>
 						<p>{jobI.jobTitle}</p>

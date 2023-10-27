@@ -28,7 +28,7 @@ a {
     
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     font-size: 17px;
     padding: 0 10px;
     border-bottom: 1px solid rgb(67, 92, 132);
@@ -50,7 +50,7 @@ a {
     background-color: inherit;
     flex-direction: row;
 
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
 
 }
